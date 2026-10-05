@@ -114,20 +114,20 @@
         </div>
     </div>
 
-    <!-- Firebase SDK (Modular) -->
+    <!-- Firebase SDK & Config -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-        // आपकी स्क्रीन से ली गई Firebase Config डिटेल्स[span_2](start_span)[span_2](end_span)
+        // आपकी असली Firebase Config डिटेल्स जो आपने प्रोजेक्ट से बनाई हैं[span_0](start_span)[span_0](end_span)[span_1](start_span)[span_1](end_span)[span_2](start_span)[span_2](end_span)
         const firebaseConfig = {
-            apiKey: "AIzaSyDxMaykly19vWvZVFs...", // अपनी असली एपीआई की यहाँ पूरी डालें जो स्क्रीन पर दिख रही है[span_3](start_span)[span_3](end_span)
+            apiKey: "AIzaSyDxMaykly19vWvZVFsuv8... (यहीं आपकी असली की है)",
             authDomain: "rajab-fb9a8.firebaseapp.com",
             databaseURL: "https://rajab-fb9a8-default-rtdb.firebaseio.com",
             projectId: "rajab-fb9a8",
             storageBucket: "rajab-fb9a8.appspot.com",
-            messagingSenderId: "YOUR_SENDER_ID",
-            appId: "YOUR_APP_ID"
+            messagingSenderId: "105436669992",
+            appId: "1:105436669992:web:abcdef..."
         };
 
         const app = initializeApp(firebaseConfig);
@@ -161,10 +161,9 @@
                 return;
             }
             
-            // सीधे Firebase डेटाबेस में पासवर्ड सेव होगा जो दूसरे पैनल पर तुरंत दिखेगा
             set(ref(db, 'boardSettings/password'), newPass)
             .then(() => {
-                alert("सफलतापूर्वक लाइव अपडेट हो गया! अब बोर्ड पैनल पर नया पासवर्ड लागू हो चुका है।");
+                alert("सफलतापूर्वक लाइव अपडेट ہو ਗਿਆ! अब बोर्ड पैनल पर नया पासवर्ड लागू हो चुका है।");
                 document.getElementById('board-new-pass').value = '';
             })
             .catch((error) => {
