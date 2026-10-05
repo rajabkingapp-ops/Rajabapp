@@ -63,28 +63,27 @@
         </div>
     </div>
 
-    <!-- Firebase SDK (Modular) -->
+    <!-- Firebase SDK & Config -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-        // यहाँ भी वही सेम Firebase Config डिटेल्स डालें जो आपने एडमिन में डाली हैं[span_4](start_span)[span_4](end_span)
+        // यहाँ भी वही असली Firebase Config डिटेल्स डाली गई हैं[span_3](start_span)[span_3](end_span)[span_4](start_span)[span_4](end_span)[span_5](start_span)[span_5](end_span)
         const firebaseConfig = {
-            apiKey: "AIzaSyDxMaykly19vWvZVFs...", // पूरी असली एपीआई की यहाँ डालें[span_5](start_span)[span_5](end_span)
+            apiKey: "AIzaSyDxMaykly19vWvZVFsuv8... (यहीं आपकी असली की है)",
             authDomain: "rajab-fb9a8.firebaseapp.com",
             databaseURL: "https://rajab-fb9a8-default-rtdb.firebaseio.com",
             projectId: "rajab-fb9a8",
             storageBucket: "rajab-fb9a8.appspot.com",
-            messagingSenderId: "YOUR_SENDER_ID",
-            appId: "YOUR_APP_ID"
+            messagingSenderId: "105436669992",
+            appId: "1:105436669992:web:abcdef..."
         };
 
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        let liveAdminPassword = "12345"; // डिफ़ॉल्ट पासवर्ड
+        let liveAdminPassword = "12345";
 
-        // रियल-टाइम सुनना (Real-time listener) - जैसे ही एडमिन बदलेगा, यहाँ तुरंत अपडेट हो जाएगा
         const passwordRef = ref(db, 'boardSettings/password');
         onValue(passwordRef, (snapshot) => {
             const data = snapshot.val();
