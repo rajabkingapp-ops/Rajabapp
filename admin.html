@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="hi" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rajab King YT - Admin Control Panel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #0b0f19; color: #fff; height: 100vh; display: flex; justify-content: center; align-items: center; overflow: hidden; background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(0, 200, 255, 0.05) 40px, rgba(0, 200, 255, 0.05) 41px); }
+        .app-container { width: 100%; max-width: 950px; height: 520px; background-color: #121622; border-radius: 14px; box-shadow: 0 15px 35px rgba(0,0,0,0.9); border: 1px solid #1f293d; display: flex; position: relative; overflow: hidden; }
+        
+        #login-section { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; }
+        .login-card { background-color: #161b28; padding: 35px; border-radius: 16px; border: 1px solid #232d42; width: 420px; box-shadow: 0 10px 25px rgba(0,0,0,0.6); text-align: center; }
+        .logo-circle { width: 75px; height: 75px; background: #1f293d; border-radius: 50%; margin: 0 auto 15px; overflow: hidden; display: flex; justify-content: center; align-items: center; border: 2px solid #00d2ff; box-shadow: 0 0 20px rgba(0,210,255,0.5); }
+        .logo-circle img { width: 100%; height: 100%; object-fit: cover; }
+        .login-card h2 { font-size: 18px; color: #fff; letter-spacing: 1px; }
+        .login-card p { font-size: 11px; color: #8b949e; margin-bottom: 25px; letter-spacing: 2px; }
+        .input-group { position: relative; margin-bottom: 20px; text-align: left; }
+        .input-group label { display: block; font-size: 12px; color: #8b949e; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1px; }
+        .input-field-wrapper { position: relative; display: flex; align-items: center; }
+        .input-field-wrapper i { position: absolute; left: 15px; color: #6b7280; font-size: 14px; }
+        .input-group input { width: 100%; padding: 12px 15px 12px 40px; background-color: #0d1117; border: 1px solid #30363d; border-radius: 8px; color: #fff; font-size: 14px; outline: none; transition: 0.3s; }
+        .input-group input:focus { border-color: #00d2ff; box-shadow: 0 0 10px rgba(0,210,255,0.4); }
+        .btn-primary { width: 100%; padding: 12px; background: linear-gradient(135deg, #00d2ff, #0099ff); border: none; border-radius: 8px; color: #fff; font-size: 15px; font-weight: bold; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px rgba(0,210,255,0.4); display: flex; justify-content: center; align-items: center; gap: 10px; }
+        .btn-primary:hover { opacity: 0.9; box-shadow: 0 6px 20px rgba(0,210,255,0.6); }
+
+        #dashboard-section { display: none; width: 100%; height: 100%; }
+        .sidebar { width: 70px; background-color: #0d1117; border-right: 1px solid #1f293d; display: flex; flex-direction: column; align-items: center; padding: 20px 0; gap: 25px; }
+        .sidebar i { color: #8b949e; font-size: 18px; cursor: pointer; transition: 0.3s; }
+        .sidebar i:hover, .sidebar i.active { color: #00d2ff; }
+        .main-content { flex: 1; display: flex; flex-direction: column; }
+        .top-bar { height: 60px; border-bottom: 1px solid #1f293d; display: flex; justify-content: space-between; align-items: center; padding: 0 25px; background-color: #121622; }
+        .top-bar h1 { font-size: 16px; letter-spacing: 1px; color: #fff; }
+        .dashboard-body { flex: 1; padding: 20px; display: flex; gap: 15px; background-color: #0b0f19; overflow-x: auto; }
+        .stat-card { background-color: #161b28; border: 1px solid #1f293d; border-radius: 10px; padding: 20px; min-width: 140px; display: flex; flex-direction: column; justify-content: space-between; }
+        .stat-card span { font-size: 12px; color: #8b949e; text-transform: uppercase; }
+        .create-user-panel { background-color: #161b28; border: 1px solid #1f293d; border-radius: 10px; padding: 20px; flex: 1; display: flex; flex-direction: column; gap: 15px; }
+        .create-user-panel h3 { font-size: 14px; color: #8b949e; text-transform: uppercase; letter-spacing: 1px; }
+        .form-row { display: flex; gap: 15px; }
+        .form-row .input-group { flex: 1; margin-bottom: 0; }
+        .error-msg { color: #f85149; font-size: 12px; margin-top: 10px; text-align: center; display: none; }
+    </style>
+</head>
+<body>
+
+    <div class="app-container" id="main-app">
+        <!-- LOGIN SECTION -->
+        <div id="login-section" style="width: 100%; height: 100%; display: flex;">
+            <div style="margin: auto;">
+                <div class="login-card">
+                    <div class="logo-circle">
+                        <img src="https://i.postimg.cc/k4M2nz99/1789643546627.png" alt="User DP">
+                    </div>
+                    <h2>RAJAB KING YT</h2>
+                    <p>ADMIN PANEL</p>
+                    <div class="input-group">
+                        <label>Username</label>
+                        <div class="input-field-wrapper">
+                            <i class="fa-solid fa-user"></i>
+                            <input type="text" id="username" placeholder="Rajab King YT">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Password</label>
+                        <div class="input-field-wrapper">
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" id="password" placeholder="12345">
+                        </div>
+                    </div>
+                    <button class="btn-primary" onclick="handleLogin()">SIGN IN <i class="fa-solid fa-arrow-right"></i></button>
+                    <div id="error-message" class="error-msg">यूज़र नेम या पासवर्ड गलत है!</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DASHBOARD SECTION -->
+        <div id="dashboard-section" style="display: none; width: 100%; height: 100%;">
+            <div style="display: flex; width: 100%; height: 100%;">
+                <div class="sidebar">
+                    <i class="fa-solid fa-bars"></i>
+                    <i class="fa-solid fa-users active" title="Users"></i>
+                    <i class="fa-solid fa-power-off" title="Logout" onclick="handleLogout()" style="margin-top: auto; color: #f85149;"></i>
+                </div>
+                <div class="main-content">
+                    <div class="top-bar">
+                        <h1>RAJAB X ADMIN CONTROL</h1>
+                        <div style="display: flex; align-items: center; gap: 6px;">
+                            <span style="width: 10px; height: 10px; background-color: #2ea043; border-radius: 50%; display: inline-block;"></span>
+                            <span style="font-size: 12px; color: #8b949e;">FIREBASE LIVE SYNC</span>
+                        </div>
+                    </div>
+                    <div class="dashboard-body">
+                        <div class="stat-card">
+                            <span>System Status</span>
+                            <h2 style="font-size: 16px; color: #2ea043; margin-top: 10px;">CONNECTED</h2>
+                        </div>
+
+                        <div class="create-user-panel">
+                            <h3>Board Panel Ke Liye Naya Password Set Karein</h3>
+                            <div class="form-row">
+                                <div class="input-group">
+                                    <label>New Board Password</label>
+                                    <input type="text" id="board-new-pass" placeholder="Enter new password for board">
+                                </div>
+                            </div>
+                            <button class="btn-primary" style="margin-top: auto; max-width: 220px; background: #00d2ff;" onclick="updateBoardSettings()">
+                                <i class="fa-solid fa-sync"></i> UPDATE BOARD LIVE
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK (Modular) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        // आपकी स्क्रीन से ली गई Firebase Config डिटेल्स[span_2](start_span)[span_2](end_span)
+        const firebaseConfig = {
+            apiKey: "AIzaSyDxMaykly19vWvZVFs...", // अपनी असली एपीआई की यहाँ पूरी डालें जो स्क्रीन पर दिख रही है[span_3](start_span)[span_3](end_span)
+            authDomain: "rajab-fb9a8.firebaseapp.com",
+            databaseURL: "https://rajab-fb9a8-default-rtdb.firebaseio.com",
+            projectId: "rajab-fb9a8",
+            storageBucket: "rajab-fb9a8.appspot.com",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        window.handleLogin = function() {
+            const userInput = document.getElementById('username').value.trim();
+            const passInput = document.getElementById('password').value.trim();
+            const errorMsg = document.getElementById('error-message');
+
+            if (userInput === "Rajab King YT" && passInput === "12345") {
+                document.getElementById('login-section').style.display = 'none';
+                document.getElementById('dashboard-section').style.display = 'flex';
+            } else {
+                errorMsg.style.display = 'block';
+            }
+        }
+
+        window.handleLogout = function() {
+            document.getElementById('dashboard-section').style.display = 'none';
+            document.getElementById('login-section').style.display = 'flex';
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            document.getElementById('error-message').style.display = 'none';
+        }
+
+        window.updateBoardSettings = function() {
+            const newPass = document.getElementById('board-new-pass').value.trim();
+            if(!newPass) {
+                alert("कृपया नया पासवर्ड दर्ज करें!");
+                return;
+            }
+            
+            // सीधे Firebase डेटाबेस में पासवर्ड सेव होगा जो दूसरे पैनल पर तुरंत दिखेगा
+            set(ref(db, 'boardSettings/password'), newPass)
+            .then(() => {
+                alert("सफलतापूर्वक लाइव अपडेट हो गया! अब बोर्ड पैनल पर नया पासवर्ड लागू हो चुका है।");
+                document.getElementById('board-new-pass').value = '';
+            })
+            .catch((error) => {
+                alert("एरर: " + error.message);
+            });
+        }
+    </script>
+</body>
+</html>
